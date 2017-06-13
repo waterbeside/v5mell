@@ -1,0 +1,26 @@
+
+.me-list-herb {
+  padding: 0;
+  li {
+    padding: 10px 15px;
+    list-style: none;
+    border-bottom: 1px solid #DDD;
+  }
+  .latin {
+    color:$me-silver;
+    white-space: nowrap;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .summary {color: $me-black-light}
+}
+
+
+.me-search-history {
+  padding: 0;
+  li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #EEE;
+    list-style: none
+  }
+}

@@ -1,0 +1,7 @@
+.me-topbar {
+  height: $me-topbar-height; padding: 0 15px;
+  &.bg-inverse {
+    background-color: rgba($me-black,.7) !important;
+    &:hover { background-color:rgba($me-black,.8) !important}
+  }
+}

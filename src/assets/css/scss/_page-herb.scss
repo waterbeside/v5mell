@@ -1,0 +1,50 @@
+.me-st-box {
+  .heading {
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid $me-gray-light;
+    color: $me-silver-light;
+  }
+  .heading-gray {
+    background: $me-gray-light;
+    color:$me-silver;
+    text-align: center;
+  }
+  .me-btn-wrap { text-align: center;}
+}
+
+
+.me-herb-names {
+  font-size: $font-size-sm;
+  dl { display: flex; margin: 0; padding: 10px;border-bottom: 1px solid $me-gray; }
+  dt {flex-shrink:0; width: 4rem; color: $me-silver-light}
+  dd { margin: 0;color: $me-silver-dark}
+}
+
+@mixin _herb-box-item-info($font-color:$me-silver) {
+  display: flex; align-items: center; justify-content:center; position: relative;  min-height: 80px;border-right:1px solid $me-gray;border-bottom:1px solid $me-gray;color:$me-silver-dark;
+  h5 {color: $font-color; font-weight: 700}
+  label { position: absolute; left: 3px; top:3px; font-size: $font-size-xs; color: $me-silver-light}
+}
+
+.me-herb-baseinfo {
+  .body {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .info-item {
+    @include _herb-box-item-info;
+    &:nth-child(even) { border-right: 0}
+
+  }
+}
+
+.me-herb-comefrom {
+  .info-item { @include _herb-box-item-info($me-black-lightest); padding: 15px;}
+}
+
+.me-herb-article {
+  padding: 10px 15px;
+  line-height: 1.6;
+  color:$me-black-lightest;
+}

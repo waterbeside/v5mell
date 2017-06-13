@@ -1,0 +1,32 @@
+
+$me-red :#FF4949 !default;
+$me-yellow :#F7BA2A !default;
+$me-blue :#20A0FF !default;
+$me-green :#13CE66 !default;
+
+$me-black: #1e2834 !default;
+$me-black-light:#324057 !default;
+$me-black-lightest:#475669 !default;
+$me-gray-dark: #D3DCE6 !default;
+$me-gray: #E5E9F2 !default;
+$me-gray-light: #EFF2F7 !default;
+$me-white-dark: #F9FAFC !default; //
+$me-silver : #99A9BF !default;
+$me-silver-dark : darken($me-silver,15%) !default;
+$me-silver-light : lighten($me-silver,15%) !default;
+
+//topbar
+$me-topbar-height:2.5rem !default;
+
+
+
+
+
+$wc-map: (
+  0: #eee,
+  6: #0254a1,
+  8: #047ab4,
+  10: #3ead3e,
+  12: #ec7100,
+  14: #b01818,
+) !default;

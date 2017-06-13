@@ -1,0 +1,72 @@
+.g-head-banner {
+  position: relative;
+  height: 10rem;
+  background-position: center center;
+  background-size: cover;
+  /* animation:header_action 0.8s; */
+  .container ,.container-fluid {
+    position: relative;
+    justify-content:center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .search-form-wrap {
+    position: relative;
+    width: 80%;
+    max-width: 500px;
+    margin: $me-topbar-height auto 0;
+    .form-control {
+      border-radius:20px;
+      background-color: rgba($white,.8);
+      border-color: rgba($white,0.7);
+      color: $black;
+      &:focus {
+        background-color: rgba($white,0.9);
+        box-shadow: 0 1px 4px rgba($white, 0.9) inset,0 0 8px rgba($white, 0.5);
+      }
+
+      &:-ms-input-placeholder,
+      &::-moz-placeholder,
+      &::-webkit-input-placeholder {
+        color: $me-silver-dark;
+      }
+    }
+    i.fa { position: absolute; right: .75rem; top: .7rem; font-size: 1rem; color: $me-silver}
+    .form-control-icon { padding-right: 2.25rem}
+  }
+
+  .p-list-herb & {
+    position: fixed;
+
+    top: 0; left:0; right:0;
+    height:80px;
+    background: #f0f0f0;
+    .search-form-wrap {
+      margin-left: 0;
+      .form-control {border-color: rgba($me-gray,0.7); border-radius:15px}
+      i.fa {right: .5rem;top: .35rem;}
+    }
+  }
+
+  .p-show-herb & {
+    height:200px;
+    background-image: url(../images/show-h-bg.jpg);
+    .container ,.container-fluid {
+      position: relative;
+      background-position: center center;
+      background-size: cover;
+      box-shadow: 0 0 1000px 1000px rgba(#141C28,0.6) inset;
+    }
+    h1 {margin-top:$me-topbar-height; font-size: 1.6rem; color: #FFF;}
+    .me-tag-wrap {position: absolute; right: 8px;bottom: 8px;}
+  }
+
+
+}
+
+.g-head-banner-index {
+  background-image: url(../images/index-searchbg.jpg);
+  height: 230px;
+  box-shadow: 0 0 1000px 1000px rgba(#141C28,0.6) inset;
+}
