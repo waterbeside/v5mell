@@ -87,7 +87,11 @@ export default {
       }
     },
     onScroll () {
-      console.log(1)
+      var scrollTop = document.body.scrollTop ? document.body.scrollTop : (document.documentElement.scrollTop ? document.documentElement.scrollTop : window.pageYOffset);
+      if(scrollTop + window.innerHeight >= document.body.scrollHeight) {
+        this.loadMore();
+      }
+
     }
   },
   mounted () {
