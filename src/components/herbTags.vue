@@ -33,6 +33,9 @@ function computeCase(type,num){
       data.text = num;
       data.className = '';
   }
+  if(("").trim){
+    data.text = data.text.trim();
+  }
   return data;
 }
 export default {
@@ -52,7 +55,7 @@ export default {
         return computeCase(this.type,this.num).className;
     },
     isShow () {
-      return this.type=='odor' && computeCase(this.type,this.num).text=='' ? false : true;
+      return computeCase(this.type,this.num).text=='' ? false : true;
     }
   }
 }
