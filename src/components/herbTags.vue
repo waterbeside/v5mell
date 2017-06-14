@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="me-tag" v-show="isShow" v-bind:class="className">{{text}}</div>
+  <div  v-show="isShow" v-bind:class="[baseClassName,className]">{{text}}</div>
 </template>
 
 <script>
@@ -8,7 +8,9 @@ import config from '../setting/config'
 function computeCase(type,num){
 
   var data = {text:'',className:''};
-
+  if(!num){
+    return data;
+  }
   const my_enum = config.enum;
   switch (type) {
     case "hot_cold":
@@ -44,7 +46,9 @@ function computeCase(type,num){
 export default {
   props: {
     type: {default:''},
-    num: {default:0}
+    num: {default:0},
+    baseClass: {default:'me-tag'},
+    noClass: {default:false}
   },
   data () {
     return {
@@ -55,7 +59,10 @@ export default {
       return computeCase(this.type,this.num).text;
     },
     className () {
-        return computeCase(this.type,this.num).className;
+        return this.noClass ? '': computeCase(this.type,this.num).className;
+    },
+    baseClassName (){
+      return this.noClass ? '' : this.baseClass;
     },
     isShow () {
       return computeCase(this.type,this.num).text=='' ? false : true;
