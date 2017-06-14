@@ -29,10 +29,6 @@
 
   <router-view></router-view>
 
-
-
-
-
   </div>
 </template>
 
@@ -56,8 +52,8 @@ export default {
     focusInputAction () {
       if(this.$route.name === "list_result"){
           this.$router.push({name: 'list_herb'})
-          this.showHistory = 1;
       }
+      this.showHistory = 1;
     },
     submitKeyword (keyword) {
       this.addHistory(keyword)
@@ -104,18 +100,20 @@ export default {
       localStorage.setItem('herb_history',null);
     }
   },
-
   mounted () {
+
+  },
+  created () {
+    var data = JSON.parse(localStorage.getItem('herb_history'));
+    this.history_list = data;
+  },
+  activated (){
     if(this.$route.name === "list_herb"){
       this.showHistory = 1;
       this.$refs['j-search-input'].focus();
     }else{
       this.showHistory = 0;
     }
-  },
-  created () {    
-    var data = JSON.parse(localStorage.getItem('herb_history'));
-    this.history_list = data;
   }
 }
 </script>
