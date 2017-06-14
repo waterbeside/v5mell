@@ -4,4 +4,6 @@
     background-color: rgba($me-black,.7) !important;
     &:hover { background-color:rgba($me-black,.8) !important}
   }
+  .navbar-brand {}
+  a.me-goback , a.me-goback:hover { padding-right: 15px; line-height:$me-topbar-height - .25rem; color:#FFF ; font-size: 1.25rem}
 }
