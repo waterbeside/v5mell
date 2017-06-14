@@ -7,15 +7,16 @@ import config from '../setting/config'
 
 function computeCase(type,num){
 
-  var data = {};
+  var data = {text:'',className:''};
+
   const my_enum = config.enum;
   switch (type) {
     case "hot_cold":
-      data.text = my_enum.hot_cold[num];
+      data.text =  my_enum.hot_cold[num] ? my_enum.hot_cold[num] : '';
       data.className = 'me-tag-hc-'+num;
       break;
     case "toxicity":
-      data.text = my_enum.toxicity[num];
+      data.text = my_enum.toxicity[num] ? my_enum.toxicity[num]  : '';
       data.className = 'me-tag-tx-'+num;
       break;
     case "odor":
@@ -23,14 +24,16 @@ function computeCase(type,num){
       data.text = '';
       odor_array.forEach(function(item,index){
         if(item){
-          let text = my_enum.odor[item];
+          let text = my_enum.odor[item] ? my_enum.odor[item] : '';
+          if(text!=''){
             data.text = data.text ? data.text + ', ' + text : text;
+          }
         }
       })
       data.className = '';
       break;
     default:
-      data.text = num;
+      data.text = '';
       data.className = '';
   }
   if(("").trim){
