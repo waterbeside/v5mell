@@ -2,118 +2,156 @@
   <div class="g-mainer p-list-herb">
     <div  class="g-head-banner " >
      <div class="container-fluid d-flex ">
-
          <div class="search-form-wrap ">
-           <form @submit="submitForm">
                <input type="search" placeholder="Search for..." class="form-control form-control-sm form-control-icon" ref="j-search-input" @focus="focusInputAction"  v-model='keyword'>
-               <i class="fa fa-times-circle" @click="clearInput"></i>
-               </form>
+               <i class="fa fa-times-circle" ></i>
+
          </div>
-
-
 
      </div>
     </div>
-    <div style="margin-top:80px"> </div>
-    <section class="me-st-box" v-show="showHistory">
-      <div class="heading h7">历史查询</div>
-      <div class="body">
-        <ul class="me-search-history" >
-          <li v-for="item in history_list" @click="submitHistory">{{item}}</li>
-        </ul>
-        <div class="me-btn-wrap">
-          <a class="btn btn-secondary " @click="clearHistory">清除历史记录</a>
-        </div>
-      </div>
-    </section>
 
-  <router-view></router-view>
+    <div style="margin-top:80px"> </div>
+    <div ref="j-herblist-scrollBox" class="me-scrollBox"   v-bind:style="{height:scrollBox_height+'px'}">
+
+      <section class="me-st-box ">
+        <div class="heading h7">结果</div>
+        <div class="body">
+          <ul class="me-list-herb">
+            <li v-for="item in result_list">
+              <router-link :to="{name:'show_herb',params: { id: item.id }}">
+                <h5 class="title">{{item.title}}
+                  <herb-tags type='hot_cold' :num="item.warm_cold"></herb-tags>
+                  <herb-tags type='odor' :num="item.odor"></herb-tags>
+
+                </h5>
+                <div class="latin">{{item.latin_name}}</div>
+                <div class="summary">{{item.description}}</div>
+              </router-link>
+            </li>
+
+
+          </ul>
+
+          <div class="me-loadMore-btn" @click="loadMore">
+            <loading :hideLoading="hideLoading"></loading>
+            {{text_showMore}}
+          </div>
+
+        </div>
+      </section>
+    </div>
 
   </div>
 </template>
 
+
 <script>
-
-
+import config from '../setting/config'
+import herbTags from '../components/herbTags'
+import loading from '../components/loading'
 export default {
   data () {
     return {
-      showHistory : 0,
-      history_list: [],
-      keyword :''
+      result_list : [],
+      total:0,
+      keyword:'',
+      page:1,
+      pagecount:0,
+      text_showMore:'加载更多',
+      hideLoading:1,
+      scrollBox_height:300,
+      scrollBox_top:0,
     }
   },
+  components:{
+    herbTags,loading
+  },
+  methods:{
+    init () { //初始化本页数据
+      this.total =0;
+      this.page =1;
+      this.pagecount = 0;
+      this.keyword = this.$route.params.keyword;
+      this.scrollBox_top = 0;
+      this.getListDatas(1)
+    },
+    getListDatas (page) {
+      var that = this;
+      var keyword = this.keyword;
+      this.hideLoading = 0;
 
-  methods: {
-    clearInput () {
-      let $searchInput = this.$refs['j-search-input'];
-      $searchInput.value = '';
+      this.$ajax.get(config.api.herb_result,{params:{keyword,page}}).then(function(response){
+        that.hideLoading = 1;
+        if(page==1){
+          if(response.data.datas.length == 0){
+            that.text_showMore = "檢得 0 條數據。"
+          }else{
+              var pagecount = Math.ceil(response.data.total / response.data.pagesize);
+              that.result_list = response.data.datas;
+              that.page = response.data.page;
+              that.total = response.data.total;
+              that.pagecount = pagecount;
+              that.text_showMore = pagecount == 1 ? "全部加載完畢，已無更多": "加載更多";
+          }
+        }else{
+          var list = that.result_list;
+          list = list.concat(response.data.datas);
+          that.page = page;
+          that.result_list = list;
+        }
+
+      }, function(error){
+        var that = this;
+        that.text_showMore = "加載失敗，請檢查您的網絡";
+      })
     },
     focusInputAction () {
-      if(this.$route.name === "list_result"){
-          this.$router.push({name: 'list_herb'})
+          this.$router.push({name: 'list_herb_search'})
+    },
+    loadMore () { //执行加载更多
+      if(this.total == 0 ){
+        return false;
       }
-      this.showHistory = 1;
-    },
-    submitKeyword (keyword) {
-      this.addHistory(keyword)
-      this.$router.push({name: 'list_result',params: { keyword: keyword }});
-      this.showHistory = 0;
-    },
-    submitForm () {
-      let $searchInput = this.$refs['j-search-input'];
-      var keyword = $searchInput.value;
-      if(keyword){
-        $searchInput.blur();
-        this.submitKeyword(keyword);
-      }
-    },
-    submitHistory (event) {
-      var keyword = event.currentTarget.innerText
-      this.keyword = keyword;
-      this.submitKeyword(keyword);
-    },
-    addHistory: function (data) {
-      var that = this;
-      var hisDataString = localStorage.getItem('herb_history') || '';
-
-      var hisData = hisDataString == '' ? [] : JSON.parse(hisDataString);
-      var hisData_temp = hisData;
-
-      if (hisData && hisData.length > 0) {
-        hisData.map(function (item, index) {
-          if (item == data || index > 15 ) {
-            hisData_temp.splice(index, 1);
-          }
-        });
-        hisData_temp.unshift(data);
+      if (this.pagecount > this.page && this.hideLoading){
+        var page = parseInt(this.page) + 1 ;
+        this.getListDatas(page);
       }else{
-        hisData_temp = [data]
+        this.text_showMore = "全部加载完毕，已无更多";
       }
-      this.history_list = hisData_temp;
-      var storageData = JSON.stringify(hisData_temp) ;
-      localStorage.setItem('herb_history',storageData);
-
     },
-    clearHistory : function(){
-      this.history_list = [];
-      localStorage.setItem('herb_history',null);
+    onScroll () { //滚动加载更多
+      var $scrollBox = this.$refs['j-herblist-scrollBox'];
+      //var scrollTop = document.body.scrollTop ? document.body.scrollTop : (document.documentElement.scrollTop ? document.documentElement.scrollTop : window.pageYOffset);
+      var scrollTop = $scrollBox.scrollTop;
+      this.scrollBox_top = scrollTop;
+      if(scrollTop + this.scrollBox_height >= $scrollBox.scrollHeight) {
+        this.loadMore();
+      }
     }
   },
   mounted () {
-
+    this.scrollBox_height =  window.innerHeight - 80 ; //设定scrollBox高度
+    this.init();
   },
   created () {
-    var data = JSON.parse(localStorage.getItem('herb_history'));
-    this.history_list = data;
+    this.$nextTick(function () {
+     this.$refs['j-herblist-scrollBox'].addEventListener('scroll', this.onScroll); //监听滚动加载更多
+    })
   },
   activated (){
-    if(this.$route.name === "list_herb"){
-      this.showHistory = 1;
-      this.$refs['j-search-input'].focus();
+    this.$store.commit('resetTitle');
+    this.$store.commit('setGo',-1);
+    if(this.keyword != this.$route.params.keyword){ //如果两次关键词不一置，重新初始化本页
+      this.result_list = [];
+      this.$refs['j-herblist-scrollBox'].scrollTop = 0
+      this.init();
     }else{
-      this.showHistory = 0;
+      this.$refs['j-herblist-scrollBox'].scrollTop = this.scrollBox_top;
     }
   }
 }
 </script>
+<style scope>
+.me-scrollBox { overflow-y: auto;}
+</style>

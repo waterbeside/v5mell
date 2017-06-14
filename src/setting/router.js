@@ -1,14 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
+import ListHerbSearch from '@/pages/list_herb_search'
 import ListHerb from '@/pages/list_herb'
-import ListHerbResult from '@/pages/list_herb_result'
 import ShowHerb from '@/pages/show_herb'
 
 Vue.use(Router)
 
 export default new Router({
   //mode:'history',
+  // scrollBehavior: function (to, from, savedPosition) {
+  //   return savedPosition
+  // },
   routes: [
     {
       path: '/',
@@ -17,14 +20,13 @@ export default new Router({
     },
     {
       path: '/list-herb',
+      name: 'list_herb_search',
+      component: ListHerbSearch,
+    },
+    {
+      path: '/list-herb/:keyword',
       name: 'list_herb',
-      component: ListHerb,
-      children: [
-      {
-        path: 'result/:keyword',
-        name: 'list_result',
-        component:ListHerbResult
-      }]
+      component:ListHerb
     },
     {
       path: '/show-herb/:id',
