@@ -80,9 +80,10 @@
 </template>
 
 <script>
-import config from '../setting/config'
-import herbTags from '../components/herbTags'
-import loading from '../components/loading'
+import config from '../setting/config';
+import herbTags from '../components/herbTags';
+import loading from '../components/loading';
+const cacheKeyPrefix = "item_herb_";
 export default {
   name: 'ShowHerb',
   data () {
@@ -105,24 +106,45 @@ export default {
       var that = this;
       var id = this.id;
       this.hideLoading = 0;
-      this.$ajax.get(config.api.herb_show,{params:{id}}).then(function(response){
-        that.hideLoading = 1;
-        if(response.data.status){
-          that.datas = response.data.data;
-          that.$store.commit('setTitle',that.datas.title);
-        }
-      }, function(error){
-        console.log(error);
-      })
+      var cacheData = this.getCache(id);
+      if(cacheData){  //检查是否有缓存
+        that.hideLoading = 1;        
+        that.rendersDatas(cacheData);
+      }else{
+        this.$ajax.get(config.api.herb_show,{params:{id}}).then(function(response){
+          that.hideLoading = 1;
+          if(response.data.status){
+            that.rendersDatas(response.data.data);
+            that.addCache(response.data.data);
+          }
+        }, function(error){
+          console.log(error);
+        })
+      }
+
+    },
+    rendersDatas (datas) {
+      this.datas = datas;
+      this.$store.commit('setTitle',datas.title);
+    },
+    addCache (datas) {
+      let dataString = JSON.stringify(datas) ;
+      let key = cacheKeyPrefix + datas.id;
+      localStorage.setItem(key,dataString);
+    },
+    getCache (id) {
+      let key = cacheKeyPrefix + id;
+      let dataString = localStorage.getItem(key);
+      return dataString ?  JSON.parse(dataString) : false ;
     }
   },
   mounted () {
-    this.init ()
+    this.init()
   },
   activated () {
     this.$store.commit('setGo',-1);
     if(this.id != this.$route.params.id){//如两次id不同，始重新加载本页数据
-      this.init ()
+      this.init()
     }
 
   }
