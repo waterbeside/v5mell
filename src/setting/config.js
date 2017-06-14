@@ -1,10 +1,11 @@
 const apiKey = '498b874cb6a0e43b'
 export default {
+  appTitle:'5MELL',
   apiKey,
   api : {
     radom_list : 'http://5mell.test/api.php?c=app&a=herb_lists_random&'+apiKey,
     herb_result : 'http://5mell.test/api.php?c=app&a=herb_lists&'+apiKey,
-    herb_show : 'http://5mell.test/api.php?c=app&a=herb_shows&'+apiKey,
+    herb_show : 'http://5mell.test/api.php?c=app&a=herb_shows&'+apiKey
   },
   enum : {
     hot_cold: {

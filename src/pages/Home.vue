@@ -3,7 +3,7 @@
     <div  class="g-head-banner g-head-banner-index" >
      <div class="container-fluid d-flex ">
        <div class="search-form-wrap ">
-             <input type="text" placeholder="Search for..." class="form-control form-control-icon" @focus="goSearchPage">
+             <input type="text" placeholder="請輸入植物名" class="form-control form-control-icon" @focus="goSearchPage">
              <i class="fa fa-search"></i>
        </div>
      </div>
@@ -23,14 +23,10 @@
               <div class="summary">{{item.description}}</div>
             </router-link>
           </li>
-
-
         </ul>
-
       </div>
     </section>
   </div>
-
 </template>
 
 <script>
@@ -46,7 +42,7 @@ export default {
   },
   methods : {
     goSearchPage () {
-      this.$router.push({name: 'list_herb'});
+      this.$router.push({name: 'list_herb_search'});
     },
 
 
@@ -64,6 +60,10 @@ export default {
       console.log(error);
     })
 
+  },
+  activated () {
+    this.$store.commit('resetTitle');
+    this.$store.commit('setGo',0)
   }
 
 }

@@ -96,7 +96,12 @@ export default {
     herbTags,loading
   },
   methods: {
-    getDatas () {
+    init () {
+      //document.documentElement.scrollTop=0
+      this.id = this.$route.params.id;
+      this.getDatas();
+    },
+    getDatas () { //取得说细数据
       var that = this;
       var id = this.id;
       this.hideLoading = 0;
@@ -104,6 +109,7 @@ export default {
         that.hideLoading = 1;
         if(response.data.status){
           that.datas = response.data.data;
+          that.$store.commit('setTitle',that.datas.title);
         }
       }, function(error){
         console.log(error);
@@ -111,11 +117,14 @@ export default {
     }
   },
   mounted () {
+    this.init ()
   },
   activated () {
-    this.id = this.$route.params.id;
-    this.getDatas();
-    document.documentElement.scrollTop=0
+    this.$store.commit('setGo',-1);
+    if(this.id != this.$route.params.id){//如两次id不同，始重新加载本页数据
+      this.init ()
+    }
+
   }
 }
 </script>

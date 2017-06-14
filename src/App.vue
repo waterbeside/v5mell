@@ -1,13 +1,10 @@
 <template>
-  <div class="all">
-    <block-header @goTop="goTop"></block-header>
-
-    <keep-alive>
-
-          <router-view></router-view>
-
-    </keep-alive>    
-  </div>
+<div class="all">
+  <block-header @goTop="goTop"></block-header>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
+</div>
 </template>
 
 <script>
@@ -18,11 +15,10 @@ export default {
     blockHeader
   },
   methods: {
-    goTop () {
-      document.documentElement.scrollTop=0
+    goTop() {
+      document.documentElement.scrollTop = 0
     }
   }
-
 }
 </script>
 
@@ -30,5 +26,4 @@ export default {
 @import "assets/css/font-awesome.css";
 @import "assets/css/bootstrap.min.css";
 @import "assets/css/app.min.css";
-
 </style>

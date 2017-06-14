@@ -1,37 +1,34 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import config from './config'
 Vue.use(Vuex)
 
 // 应用初始状态
 const state = {
-    count: 10
+    title: '5MELL',
+    headGo : 0
 }
-
 // 定义所需的 mutations
 const mutations = {
-    INCREMENT(state) {
-        state.count++
+    resetTitle (state) {
+      state.title = config.appTitle;
     },
-    DECREMENT(state) {
-        state.count--
+    setTitle (state,title) {
+      state.title = title;
+    },
+    setGo (state,go) {
+      state.headGo = go;
     }
+
 }
 //actions
 const actions = {
-  increment ({commit}) {
-      commit('INCREMENT')
-  },
-  decrement ({commit}) {
-      commit('DECREMENT')
-  }
+
 }
 
 //test
 const getters = {
-  getCount (state) {
-    return state.count
-  }
+  
 }
 
 
