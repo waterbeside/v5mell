@@ -14,13 +14,14 @@
       <div class="body">
         <ul class="me-list-herb">
           <li v-for="item in randomList">
-            <h5 class="title">{{item.title}}
-              <herb-tags type='hot_cold' :num="item.warm_cold"></herb-tags>
-              <herb-tags type='odor' :num="item.odor"></herb-tags>
-
-            </h5>
-            <div class="latin">{{item.latin_name}}</div>
-            <div class="summary">{{item.description}}</div>
+            <router-link :to="{name:'show_herb',params: { id: item.id }}">
+              <h5 class="title">{{item.title}}
+                <herb-tags type='hot_cold' :num="item.warm_cold"></herb-tags>
+                <herb-tags type='odor' :num="item.odor"></herb-tags>
+              </h5>
+              <div class="latin">{{item.latin_name}}</div>
+              <div class="summary">{{item.description}}</div>
+            </router-link>
           </li>
 
 
