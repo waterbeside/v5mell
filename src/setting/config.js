@@ -3,7 +3,8 @@ export default {
   apiKey,
   api : {
     radom_list : 'http://5mell.test/api.php?c=app&a=herb_lists_random&'+apiKey,
-    herb_result : 'http://5mell.test/api.php?c=app&a=herb_lists&'+apiKey
+    herb_result : 'http://5mell.test/api.php?c=app&a=herb_lists&'+apiKey,
+    herb_show : 'http://5mell.test/api.php?c=app&a=herb_shows&'+apiKey,
   },
   enum : {
     hot_cold: {
@@ -15,7 +16,7 @@ export default {
       "14": "热"
     },
     toxicity: {
-      "0": "未知/无毒",
+      "0": "-",
       "2": "微毒",
       "3": "小毒",
       "4": "有毒",

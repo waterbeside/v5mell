@@ -35,18 +35,24 @@
   .info-item {
     @include _herb-box-item-info;
     &:nth-child(even) { border-right: 0}
-
   }
 }
 
 .me-herb-comefrom {
   .info-item { @include _herb-box-item-info($me-black-lightest); padding: 15px;}
+  .info-item-p {
+    padding: 15px;
+    border-bottom: 1px solid $me-gray-light;
+    color: $me-silver-dark;
+  }
 }
 
 .me-herb-article {
   padding: 10px 15px;
-  line-height: 1.6;
+  line-height: 1.7;
   color:$me-black-lightest;
+  h2 { font-size: 1.5rem; margin-bottom:1rem; margin-top: 2rem;}
+  .FG { display: none}
 }
 
 .me-loadMore-btn {
