@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="me-tag" v-bind:class="className">{{text}}</div>
+  <div class="me-tag" v-show="isShow" v-bind:class="className">{{text}}</div>
 </template>
 
 <script>
@@ -50,7 +50,9 @@ export default {
     },
     className () {
         return computeCase(this.type,this.num).className;
-
+    },
+    isShow () {
+      return this.type=='odor' && computeCase(this.type,this.num).text=='' ? false : true;
     }
   }
 }
