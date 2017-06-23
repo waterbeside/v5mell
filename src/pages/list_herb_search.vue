@@ -2,19 +2,18 @@
   <div class="g-mainer p-list-herb">
     <div  class="g-head-banner " >
      <div class="container-fluid d-flex ">
-
          <div class="search-form-wrap ">
            <form @submit="submitForm">
                <input type="search" placeholder="請輸入植物名.." class="form-control form-control-sm form-control-icon" ref="j-search-input"  v-model='keyword'>
                <i class="fa fa-times-circle" @click="clearInput"></i>
                </form>
          </div>
-
      </div>
     </div>
-    <div style="margin-top:80px"> </div>
+
     <section class="me-st-box">
-      <div class="heading h7">历史查询</div>
+      <div style="height:80px"> </div>
+      <div class="heading h7" >历史查询</div>
       <div class="body">
         <ul class="me-search-history" >
           <li v-for="item in history_list" @click="submitHistory">{{item}}</li>
@@ -29,8 +28,6 @@
 </template>
 
 <script>
-
-
 export default {
   data () {
     return {
@@ -38,18 +35,16 @@ export default {
       keyword :''
     }
   },
-
   methods: {
-    clearInput () {
+    clearInput () { //清除输入框内容
       let $searchInput = this.$refs['j-search-input'];
       $searchInput.value = '';
     },
-
-    submitKeyword (keyword) {
+    submitKeyword (keyword) { //提交關鍵詞並跳轉
       this.addHistory(keyword)
       this.$router.push({name: 'list_herb',params: { keyword: keyword }});
     },
-    submitForm () {
+    submitForm () {  //處理輸入框提交
       let $searchInput = this.$refs['j-search-input'];
       var keyword = $searchInput.value;
       if(keyword){
@@ -57,18 +52,16 @@ export default {
         this.submitKeyword(keyword);
       }
     },
-    submitHistory (event) {
+    submitHistory (event) { //點擊歷史關鍵詞之動作
       var keyword = event.currentTarget.innerText
       this.keyword = keyword;
       this.submitKeyword(keyword);
     },
-    addHistory: function (data) {
+    addHistory: function (data) { //添加歷史記錄
       var that = this;
       var hisDataString = localStorage.getItem('herb_history') || '';
-
       var hisData = hisDataString == '' ? [] : JSON.parse(hisDataString);
       var hisData_temp = hisData;
-
       if (hisData && hisData.length > 0) {
         hisData.map(function (item, index) {
           if (item == data || index > 15 ) {
@@ -93,7 +86,7 @@ export default {
 
   },
   created () {
-    var data = JSON.parse(localStorage.getItem('herb_history'));
+    var data = JSON.parse(localStorage.getItem('herb_history')); //從本地緩存中取得歷史記錄并解析成數組對象
     this.history_list = data;
   },
   activated (){
