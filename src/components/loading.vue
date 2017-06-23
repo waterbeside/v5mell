@@ -1,8 +1,6 @@
 <template>
   <div class="me-loading-center" :class="{'me-loading-hiden': hideLoading}">
-    <i class="fa fa-spinner fa-spin"
-    >
-    </i>
+    <i class="fa fa-spinner fa-spin" > </i>
   </div>
 </template>
 
@@ -11,9 +9,6 @@ export default {
   props: {
     hideLoading: {
       // default: true
-    },
-    isEndText: {
-      // default: ''
     }
   },
 }
