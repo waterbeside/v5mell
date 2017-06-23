@@ -5,13 +5,13 @@ import axios from 'axios';
 import App from './App'
 import router from './setting/router'
 import store from './setting/store'
-
+import onScroll from './directives/onScroll'
 
 Vue.config.productionTip = false
 
 Vue.prototype.$ajax = axios;
 
-
+Vue.directive('onScroll', onScroll);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
