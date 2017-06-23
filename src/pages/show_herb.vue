@@ -2,7 +2,7 @@
   <div class="g-mainer p-show-herb">
 
     <div  class="g-head-banner " >
-     <div class="container-fluid d-flex"  :style="{ backgroundImage: 'url('+datas.thumb+')' }">>
+     <div class="container-fluid d-flex"  :style="{'backgroundImage': datas.thumb ? 'url('+datas.thumb+')' : 'none'}">>
        <h1>{{datas.title}}</h1>
        <div class="me-tag-wrap">
          <herb-tags type='hot_cold' :num="datas.warm_cold"></herb-tags>
@@ -100,6 +100,7 @@ export default {
     init () {
       //document.documentElement.scrollTop=0
       this.id = this.$route.params.id;
+      this.datas = [];
       this.getDatas();
     },
     getDatas () { //取得说细数据
@@ -108,7 +109,7 @@ export default {
       this.hideLoading = 0;
       var cacheData = this.getCache(id);
       if(cacheData){  //检查是否有缓存
-        that.hideLoading = 1;        
+        that.hideLoading = 1;
         that.rendersDatas(cacheData);
       }else{
         this.$ajax.get(config.api.herb_show,{params:{id}}).then(function(response){
@@ -142,9 +143,15 @@ export default {
     this.init()
   },
   activated () {
+    document.documentElement.scrollTop=0
     this.$store.commit('setGo',-1);
     if(this.id != this.$route.params.id){//如两次id不同，始重新加载本页数据
       this.init()
+    }else{
+      if(this.datas.title){
+          this.$store.commit('setTitle',this.datas.title);
+      }
+
     }
 
   }
