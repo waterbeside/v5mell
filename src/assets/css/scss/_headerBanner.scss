@@ -18,12 +18,14 @@
     margin: $me-topbar-height auto 0;
     .form-control {
       border-radius:20px;
-      background-color: rgba($white,.8);
-      border-color: rgba($white,0.7);
+      background-color: $white;
+      border-color: rgba($white,0.4);
+      border-width: 2px;
       color: $black;
+      box-shadow: 0 3px 8px rgba($black, 0.4) inset;
       &:focus {
-        background-color: rgba($white,0.9);
-        box-shadow: 0 1px 4px rgba($white, 0.9) inset,0 0 8px rgba($white, 0.5);
+        background-color: rgba($white,0.95);
+        box-shadow: 0 1px 4px rgba($black, 0.1) inset,0 0 8px rgba($white, 0.5);
       }
 
       &:-ms-input-placeholder,
@@ -38,13 +40,13 @@
 
   .p-list-herb & {
     position: fixed;
-
+    z-index: 2;
     top: 0; left:0; right:0;
     height:80px;
     background: #f0f0f0;
     .search-form-wrap {
       margin-left: 0;
-      .form-control {border-color: rgba($me-gray,0.7); border-radius:15px}
+      .form-control {border-color: rgba($me-gray,0.7); border-width: 1px;border-radius:15px; box-shadow: inset 0 1px 5px rgba($me-black,0.2)}
       i.fa {right: .5rem;top: .35rem;}
     }
   }
